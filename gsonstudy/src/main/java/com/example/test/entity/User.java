@@ -1,4 +1,4 @@
-package com.example.test1.entity;
+package com.example.test.entity;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,10 +8,16 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
     //省略其它
-    public String name;
-    public int age;
-    @SerializedName(value = "emailAddress" ,alternate = {"email","email_address"})
-    public String emailAddress;
+    private String name;
+
+    private int age;
+    @SerializedName(value = "emailAddress", alternate = {"email", "email_address"})
+    private String emailAddress;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     public String getName() {
         return name;

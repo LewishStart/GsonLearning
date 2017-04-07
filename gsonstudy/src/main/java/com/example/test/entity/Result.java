@@ -1,4 +1,4 @@
-package com.example.test1.entity;
+package com.example.test.entity;
 
 /**
  * author: sundong

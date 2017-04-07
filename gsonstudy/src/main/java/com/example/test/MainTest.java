@@ -1,8 +1,9 @@
-package com.example.test1;
+package com.example.test;
 
-import com.example.test1.entity.Result;
-import com.example.test1.entity.User;
+import com.example.test.entity.Result;
+import com.example.test.entity.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -15,7 +16,8 @@ import java.util.List;
 
 public class MainTest {
     public static Gson gson;
-    public static void main(String[] args){
+
+    public static void BasicTest(){
         gson = new Gson();
         /**
          * 基本数据类型解析
@@ -30,6 +32,10 @@ public class MainTest {
         String jsonNumber = gson.toJson(100);       // 100
         String jsonBoolean = gson.toJson(false);    // false
         String jsonString = gson.toJson("String"); //"String"
+    }
+
+    public static void AnnotationTest(){
+        gson = new Gson();
         /**
          * SerializedName注解测试
          */
@@ -39,6 +45,11 @@ public class MainTest {
         User user1 = gson.fromJson(strSerializedNameJson1, User.class);
         User user2 = gson.fromJson(strSerializedNameJson2, User.class);
         User user3 = gson.fromJson(strSerializedNameJson3, User.class);
+
+    }
+
+    public static void GenericTest(){
+        gson = new Gson();
         /**
          * 泛型测试
          */
@@ -72,7 +83,34 @@ public class MainTest {
         Type userListType = new TypeToken<Result<List<User>>>(){}.getType();
         Result<List<User>> userListResult = gson.fromJson(json2,userListType);
         List<User> users = userListResult.data;
-
-        String haha = "";
     }
+
+    public static void GsonBuilderTest(){
+        Gson gson = new GsonBuilder()
+                //序列化null
+                .serializeNulls()
+                // 设置日期时间格式，另有2个重载方法
+                // 在序列化和反序化时均生效
+//                .setDateFormat("yyyy-MM-dd")
+                // 禁此序列化内部类
+//                .disableInnerClassSerialization()
+                //生成不可执行的Json（多了 )]}' 这4个字符）
+//                .generateNonExecutableJson()
+                //禁止转义html标签
+                .disableHtmlEscaping()
+                //格式化输出
+//                .setPrettyPrinting()
+                .create();
+
+        String json = gson.toJson(new User("Tait", 28), User.class);
+        System.out.print(json);
+    }
+
+    public static void main(String[] args){
+        GsonBuilderTest();
+
+
+    }
+
+
 }
